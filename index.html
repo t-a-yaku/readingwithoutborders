@@ -92,9 +92,9 @@
 
   <!-- Лічильники -->
   <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
-    <div class="stat-badge"><i class="bi bi-map text-gold"></i><strong>4</strong> регіонів</div>
-    <div class="stat-badge"><i class="bi bi-building text-gold"></i><strong>5</strong> бібліотек</div>
-    <div class="stat-badge"><i class="bi bi-book text-gold"></i><strong>2</strong> книг у топі</div>
+    <div class="stat-badge"><i class="bi bi-map text-gold"></i><strong>5</strong> регіонів</div>
+    <div class="stat-badge"><i class="bi bi-building text-gold"></i><strong>6</strong> бібліотек</div>
+    <div class="stat-badge"><i class="bi bi-book text-gold"></i><strong>3</strong> книг у топі</div>
   </div>
 
   <!-- Легенда -->
@@ -230,6 +230,17 @@
       <div class="top-item d-flex align-items-center gap-3">
         <div class="top-number text-gold fw-bold">2</div>
         <div class="flex-grow-1 min-width-0">
+          <div class="fw-bold text-truncate lh-sm">«Мавка. Берегиня лісу»</div>
+          <div class="text-muted small text-truncate">за мотивами Лесі Українки</div>
+        </div>
+        <div class="top-count-wrap d-flex flex-column align-items-end">
+          <div class="bar-lite" style="width:10px;"></div>
+          <div class="text-muted smaller mt-1"><strong>1</strong> бібліотек</div>
+        </div>
+      </div>
+      <div class="top-item d-flex align-items-center gap-3">
+        <div class="top-number text-gold fw-bold">3</div>
+        <div class="flex-grow-1 min-width-0">
           <div class="fw-bold text-truncate lh-sm">Таємне Товариство Боягузів</div>
           <div class="text-muted small text-truncate">Вороніна Л.</div>
         </div>
@@ -267,6 +278,16 @@
           <div class="bar-rust" style="width:10px;"></div>
           <div class="text-muted smaller mt-1"><strong>1</strong> згадок</div>
         </div>
+      </div>
+      <div class="top-item d-flex align-items-center gap-3">
+        <div class="top-number text-gold fw-bold">3</div>
+        <div class="flex-grow-1 min-width-0">
+          <div class="fw-bold text-truncate">за мотивами Лесі Українки</div>
+        </div>
+        <div class="top-count-wrap d-flex flex-column align-items-end">
+          <div class="bar-rust" style="width:10px;"></div>
+          <div class="text-muted smaller mt-1"><strong>1</strong> згадок</div>
+        </div>
       </div></div>
         </div>
         <div class="stats-card p-4 shadow-sm">
@@ -276,6 +297,7 @@
           </div>
           <div class="author-cloud text-center"><span class="cloud-item" style="font-size:1.8rem;">Вдовиченко Г.</span>
 <span class="cloud-item" style="font-size:1.3rem;">Вороніна Л.</span>
+<span class="cloud-item" style="font-size:1.3rem;">за мотивами Лесі Українки</span>
 </div>
         </div>
       </div>
@@ -333,7 +355,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-const MAP_DATA = {"vinnytska": {"region_name": "Вінницька", "total_libraries": 1, "libraries": [{"name": "Вінницька обласна бібліотека для дітей та юнацтва ім. І. Франка", "city": "Вінниця", "source_url": "", "website_url": "https://vinobu.vn.ua/"}], "books": []}, "kyivska": {"region_name": "Київська", "total_libraries": 1, "libraries": [{"name": "Київська ОБД", "city": "Київ", "source_url": "", "website_url": ""}], "books": []}, "cherkaska": {"region_name": "Черкаська", "total_libraries": 1, "libraries": [{"name": "Центральна бібліотека для дорослих та дітей Золотоніської міської ради", "city": "Золотоноша", "source_url": "", "website_url": "https://www.facebook.com/people/%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0-%D0%B1%D1%96%D0%B1%D0%BB%D1%96%D0%BE%D1%82%D0%B5%D0%BA%D0%B0-%D0%B4%D0%BB%D1%8F-%D0%B4%D0%BE%D1%80%D0%BE%D1"}], "books": []}, "kyiv": {"region_name": "м. Київ", "total_libraries": 2, "libraries": [{"name": "Національна бібліотека України для дітей", "city": "Київ", "source_url": "", "website_url": ""}, {"name": "Національна бібліотека України ім. Ярослава Мудрого", "city": "Київ", "source_url": "", "website_url": ""}], "books": [{"title": "36 і 6 котів", "author": "Вдовиченко Г.", "count": 2}, {"title": "Таємне Товариство Боягузів", "author": "Вороніна Л.", "count": 1}]}};
+const MAP_DATA = {"vinnytska": {"region_name": "Вінницька", "total_libraries": 1, "libraries": [{"name": "Вінницька обласна бібліотека для дітей та юнацтва ім. І. Франка", "city": "Вінниця", "source_url": "", "website_url": "https://vinobu.vn.ua/"}], "books": []}, "kyivska": {"region_name": "Київська", "total_libraries": 1, "libraries": [{"name": "Київська ОБД", "city": "Київ", "source_url": "", "website_url": ""}], "books": []}, "kharkivska": {"region_name": "Харківська", "total_libraries": 1, "libraries": [{"name": "Центральна бібліотека Слобідського району м.Харкова", "city": "Харків", "source_url": "https://www.facebook.com/BibliotekaSlobidska", "website_url": "https://www.facebook.com/BibliotekaSlobidska/"}], "books": [{"title": "«Мавка. Берегиня лісу»", "author": "за мотивами Лесі Українки", "count": 1}]}, "cherkaska": {"region_name": "Черкаська", "total_libraries": 1, "libraries": [{"name": "Центральна бібліотека для дорослих та дітей Золотоніської міської ради", "city": "Золотоноша", "source_url": "", "website_url": "https://www.facebook.com/people/%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0-%D0%B1%D1%96%D0%B1%D0%BB%D1%96%D0%BE%D1%82%D0%B5%D0%BA%D0%B0-%D0%B4%D0%BB%D1%8F-%D0%B4%D0%BE%D1%80%D0%BE%D1"}], "books": []}, "kyiv": {"region_name": "м. Київ", "total_libraries": 2, "libraries": [{"name": "Національна бібліотека України для дітей", "city": "Київ", "source_url": "", "website_url": ""}, {"name": "Національна бібліотека України ім. Ярослава Мудрого", "city": "Київ", "source_url": "", "website_url": ""}], "books": [{"title": "36 і 6 котів", "author": "Вдовиченко Г.", "count": 2}, {"title": "Таємне Товариство Боягузів", "author": "Вороніна Л.", "count": 1}]}};
 
 (function () {
   'use strict';
