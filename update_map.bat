@@ -9,7 +9,7 @@ echo.
 cd /d "C:\Projects\PortKEY\mvp"
 
 echo [1/3] Генеруємо index.html з бази даних...
-docker-compose exec web python export_reader_choice_map.py
+docker-compose exec -T web python export_reader_choice_map.py
 if errorlevel 1 (
     echo.
     echo ПОМИЛКА: не вдалось згенерувати HTML
