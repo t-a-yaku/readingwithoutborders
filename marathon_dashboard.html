@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>У світі пригод і фантазій — Дашборд марафону</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a2e;
+  --paper: #faf8f4;
+  --warm: #f5f0e8;
+  --gold: #c8960c;
+  --gold-light: #f0d98a;
+  --rust: #c0392b;
+  --steel: #6b6b7b;
+  --border: #e0ddd8;
+  --teal: #0f7c6e;
+  --teal-light: #e0f2ef;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Geologica', sans-serif; background: var(--paper); color: var(--ink); }
+
+/* HEADER */
+.hero {
+  background: var(--ink);
+  padding: 36px 48px 32px;
+  border-bottom: 3px solid var(--gold);
+}
+.hero-eye { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.hero-title { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 6px; }
+.hero-title em { color: var(--gold); font-style: italic; }
+.hero-sub { font-size: 14px; color: rgba(255,255,255,0.45); margin-bottom: 28px; }
+.hero-stats { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+.stat { display: flex; flex-direction: column; gap: 3px; }
+.stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--gold); line-height: 1; }
+.stat-l { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.8px; }
+
+/* NAV TABS */
+.tabs { background: white; border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; gap: 0; position: sticky; top: 0; z-index: 50; }
+.tab { padding: 14px 20px; font-size: 13px; font-weight: 500; color: var(--steel); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.15s; white-space: nowrap; }
+.tab:hover { color: var(--ink); }
+.tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* MAIN */
+.wrap { max-width: 1200px; margin: 0 auto; padding: 36px 48px 64px; }
+.section { display: none; }
+.section.active { display: block; }
+.section-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.section-sub { font-size: 13px; color: var(--steel); margin-bottom: 28px; }
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+/* CARD */
+.card { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.card-head { padding: 16px 20px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; justify-content: space-between; }
+.card-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; }
+.card-meta { font-size: 11px; color: var(--steel); }
+.card-body { padding: 8px 0; }
+
+/* RANKED LIST */
+.rank-list { list-style: none; }
+.rank-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; border-bottom: 1px solid var(--border); transition: background 0.1s; cursor: default; }
+.rank-item:last-child { border-bottom: none; }
+.rank-item:hover { background: var(--warm); }
+.rank-n { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--border); min-width: 22px; text-align: center; }
+.rank-n.g { color: var(--gold); }
+.rank-n.s { color: #aaa; }
+.rank-n.b { color: #cd7f32; }
+.rank-info { flex: 1; min-width: 0; }
+.rank-title { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rank-sub { font-size: 11px; color: var(--steel); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rank-bar-wrap { width: 80px; flex-shrink: 0; }
+.rank-bar { height: 4px; background: var(--warm); border-radius: 2px; overflow: hidden; margin-bottom: 3px; }
+.rank-bar-fill { height: 100%; background: var(--gold); border-radius: 2px; }
+.rank-count { font-size: 11px; color: var(--steel); text-align: right; }
+
+/* REGION BAR CHART */
+.region-list { padding: 12px 20px; display: flex; flex-direction: column; gap: 8px; }
+.region-item { display: flex; align-items: center; gap: 10px; }
+.region-name { font-size: 12px; min-width: 140px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.region-bar-wrap { flex: 1; height: 8px; background: var(--warm); border-radius: 4px; overflow: hidden; }
+.region-bar { height: 100%; border-radius: 4px; background: var(--teal); }
+.region-count { font-size: 12px; color: var(--steel); min-width: 30px; text-align: right; flex-shrink: 0; }
+
+/* AGE CHART */
+.age-chart { padding: 20px; display: flex; align-items: flex-end; gap: 6px; height: 200px; }
+.age-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
+.age-bar-wrap { width: 100%; display: flex; flex-direction: column; justify-content: flex-end; flex: 1; }
+.age-bar { width: 100%; background: var(--gold-light); border-radius: 3px 3px 0 0; transition: background 0.15s; position: relative; }
+.age-bar:hover { background: var(--gold); }
+.age-bar-val { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--steel); white-space: nowrap; }
+.age-label { font-size: 11px; color: var(--steel); }
+
+/* TIMELINE */
+.timeline { padding: 20px; }
+.timeline-chart { display: flex; align-items: flex-end; gap: 3px; height: 120px; overflow-x: auto; }
+.tl-col { flex-shrink: 0; width: 22px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+.tl-bar { width: 18px; background: var(--gold); border-radius: 2px 2px 0 0; transition: background 0.1s; cursor: default; position: relative; }
+.tl-bar:hover { background: var(--rust); }
+.tl-bar:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: white;
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
+}
+.tl-label { font-size: 9px; color: var(--steel); margin-top: 3px; transform: rotate(-45deg); white-space: nowrap; }
+
+/* OVERVIEW METRICS */
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+.metric { background: var(--warm); border-radius: 8px; padding: 18px 20px; }
+.metric-n { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--gold); }
+.metric-l { font-size: 12px; color: var(--steel); margin-top: 2px; }
+
+/* TAG CLOUD */
+.tag-cloud { padding: 20px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; min-height: 140px; }
+.tag { font-family: 'Playfair Display', serif; color: var(--ink); cursor: default; transition: color 0.15s; }
+.tag:hover { color: var(--rust); }
+.tag.s1 { font-size: 12px; color: var(--steel); }
+.tag.s2 { font-size: 15px; color: var(--steel); }
+.tag.s3 { font-size: 19px; font-weight: 600; }
+.tag.s4 { font-size: 24px; font-weight: 700; color: var(--gold); }
+.tag.s5 { font-size: 30px; font-weight: 700; color: var(--rust); }
+
+/* NOTE */
+.note { font-size: 12px; color: var(--steel); padding: 10px 20px; border-top: 1px solid var(--border); background: var(--warm); font-style: italic; }
+
+@media (max-width: 768px) {
+  .hero { padding: 24px; }
+  .wrap { padding: 24px; }
+  .tabs { padding: 0 16px; overflow-x: auto; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .metrics { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header style="background:var(--ink); padding:10px 48px; display:flex; align-items:center; justify-content:flex-end; border-bottom:1px solid rgba(255,255,255,0.08);">
+  <a href="https://chl.kiev.ua" target="_blank" style="font-size:12px; color:rgba(255,255,255,0.45); text-decoration:none; text-align:right; line-height:1.5;">Національна бібліотека України для дітей<br><span style="color:var(--gold); opacity:0.7;">chl.kiev.ua</span></a>
+</header>
+
+<div class="hero">
+  <div class="hero-eye">Національний читацький марафон · Діти України читають · 2026</div>
+  <h1 class="hero-title">У світі <em>пригод і фантазій</em></h1>
+  <p class="hero-sub">Аналіз відеомарафону · дані очищено та нормалізовано</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-n">892</span><span class="stat-l">відео</span></div>
+    <div class="stat"><span class="stat-n">949</span><span class="stat-l">учасники</span></div>
+    <div class="stat"><span class="stat-n">23</span><span class="stat-l">областей</span></div>
+    <div class="stat"><span class="stat-n">40</span><span class="stat-l">днів</span></div>
+  </div>
+</div>
+
+<nav class="tabs">
+  <div class="tab active" onclick="showTab('overview')">Огляд</div>
+  <div class="tab" onclick="showTab('books')">Твори</div>
+  <div class="tab" onclick="showTab('authors')">Автори</div>
+  <div class="tab" onclick="showTab('regions')">Регіони</div>
+  <div class="tab" onclick="showTab('age')">Вік</div>
+  <div class="tab" onclick="showTab('timeline')">Динаміка</div>
+</nav>
+
+<div class="wrap">
+
+<!-- ОГЛЯД -->
+<div class="section active" id="tab-overview">
+  <div class="metrics">
+    <div class="metric"><div class="metric-n">57</div><div class="metric-l">Групових відео (2+ учасники)</div></div>
+    <div class="metric"><div class="metric-n">5</div><div class="metric-l">Макс учасників на 1 відео</div></div>
+    <div class="metric"><div class="metric-n">99</div><div class="metric-l">Відео в найактивніший день</div></div>
+    <div class="metric"><div class="metric-n">10</div><div class="metric-l">Медіанний вік учасника</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Топ-10 творів</div>
+        <div class="card-meta">за кількістю відео</div>
+      </div>
+      <div class="card-body">
+        <ul class="rank-list" id="overview-books"></ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Топ-10 авторів</div>
+        <div class="card-meta">за кількістю відео</div>
+      </div>
+      <div class="card-body">
+        <ul class="rank-list" id="overview-authors"></ul>
+      </div>
+      <div class="card-head" style="border-top:1px solid var(--border); border-bottom:none; margin-top:8px;">
+        <div class="card-title">Автори у виборі</div>
+        <div class="card-meta">розмір — кількість відео</div>
+      </div>
+      <div class="tag-cloud" id="author-cloud"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ТВОРИ -->
+<div class="section" id="tab-books">
+  <div class="section-title">Твори марафону</div>
+  <p class="section-sub">Нормалізовані назви · зведено варіанти написання</p>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Повний рейтинг творів</div>
+        <div class="card-meta">топ-30</div>
+      </div>
+      <div class="card-body">
+        <ul class="rank-list" id="all-books"></ul>
+      </div>
+      <div class="note">* нормалізовано дублі написань; поле «Назва, автор» — вільний текст учасників</div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Українські vs зарубіжні</div>
+        <div class="card-meta">за автором</div>
+      </div>
+      <div class="card-body" style="padding:20px;">
+        <div style="display:flex; gap:16px; margin-bottom:20px;">
+          <div class="metric" style="flex:1;"><div class="metric-n" style="color:var(--teal);">~68%</div><div class="metric-l">Українські твори</div></div>
+          <div class="metric" style="flex:1;"><div class="metric-n" style="color:var(--rust);">~32%</div><div class="metric-l">Зарубіжні твори</div></div>
+        </div>
+        <p style="font-size:13px; color:var(--steel); line-height:1.6;">Лідер серед зарубіжних — Роальд Дал. Серед класики — Андерсен, Перро, брати Грімм. Гаррі Поттер у топ-5 творів загалом.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- АВТОРИ -->
+<div class="section" id="tab-authors">
+  <div class="section-title">Автори</div>
+  <p class="section-sub">Нормалізовані імена · зведено варіанти (Нестайко / Всеволод Нестайко / Нестайко В.)</p>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Рейтинг авторів</div>
+        <div class="card-meta">топ-20 за кількістю відео</div>
+      </div>
+      <div class="card-body">
+        <ul class="rank-list" id="all-authors"></ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Хмарка авторів</div>
+        <div class="card-meta">розмір — популярність</div>
+      </div>
+      <div class="tag-cloud" id="author-cloud-2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- РЕГІОНИ -->
+<div class="section" id="tab-regions">
+  <div class="section-title">Регіони</div>
+  <p class="section-sub">27 областей-учасниць · нормалізовано регістр і написання</p>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Активність регіонів</div>
+        <div class="card-meta">кількість відео</div>
+      </div>
+      <div class="card-body">
+        <div class="region-list" id="regions-chart"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Топ-3 твори по регіону</div>
+        <div class="card-meta">для 5 найактивніших областей</div>
+      </div>
+      <div class="card-body" style="padding:16px 20px;">
+        <div id="region-tops"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ВІК -->
+<div class="section" id="tab-age">
+  <div class="section-title">Вікова аудиторія</div>
+  <p class="section-sub">Індивідуальні учасники · групові записи виключено з підрахунку де вік змішаний</p>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Розподіл за віком</div>
+        <div class="card-meta">кількість учасників</div>
+      </div>
+      <div class="age-chart" id="age-chart"></div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Вікові групи</div>
+        <div class="card-meta">молодший / середній / старший</div>
+      </div>
+      <div class="card-body" style="padding:20px; display:flex; flex-direction:column; gap:12px;">
+        <div class="metric"><div class="metric-n" style="color:var(--teal);">232</div><div class="metric-l">Молодший шкільний вік 6–8 років</div></div>
+        <div class="metric"><div class="metric-n" style="color:var(--gold);">434</div><div class="metric-l">Середній шкільний вік 9–11 років</div></div>
+        <div class="metric"><div class="metric-n" style="color:var(--rust);">197</div><div class="metric-l">Старший шкільний вік 12–15 років</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ДИНАМІКА -->
+<div class="section" id="tab-timeline">
+  <div class="section-title">Динаміка надходжень</div>
+  <p class="section-sub">Березень–квітень 2026 · добова активність</p>
+  <div class="card" style="margin-bottom:24px;">
+    <div class="card-head">
+      <div class="card-title">Відео по днях</div>
+      <div class="card-meta">наведи на стовпчик щоб побачити дату</div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-chart" id="timeline-chart"></div>
+    </div>
+  </div>
+  <div class="grid-3">
+    <div class="metric"><div class="metric-n">99</div><div class="metric-l">Пік: 1 квітня (дедлайн)</div></div>
+    <div class="metric"><div class="metric-n">82</div><div class="metric-l">2-й пік: 31 березня</div></div>
+    <div class="metric"><div class="metric-n">~24</div><div class="metric-l">Середній день марафону</div></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const DATA = {
+  books: [
+    {t:'Тореадори з Васюківки', a:'Всеволод Нестайко', n:21},
+    {t:'Дивовижні пригоди в лісовій школі', a:'Всеволод Нестайко', n:15},
+    {t:'Таємне Товариство Боягузів', a:'Леся Вороніна', n:8},
+    {t:'Чудове Чудовисько', a:'Сашко Дерманський', n:6},
+    {t:'Гаррі Поттер (серія)', a:'Джоан Роулінг', n:6},
+    {t:'Зварю тобі борщику', a:'Зірка Мензатюк', n:5},
+    {t:'Чарлі і шоколадна фабрика', a:'Роальд Дал', n:3},
+    {t:'36 і 6 котів', a:'Галина Вдовиченко', n:3},
+    {t:'Чудесна мандрівка Нільса', a:'Сельма Лаґерлеф', n:3},
+    {t:'Щоденник Слабака', a:'Джефф Кінні', n:3},
+    {t:'Кіт у чоботях', a:'Шарль Перро', n:3},
+    {t:'Друга справа Сашка Сірого', a:'Андрій Кокотюха', n:3},
+    {t:'Пригоди на острові Клаварен', a:'Юліта Ран', n:3},
+    {t:'Незламне серце', a:'', n:3},
+    {t:'Дракони', a:'', n:3},
+    {t:'Країна неслухняних дітей', a:'', n:3},
+    {t:'Незвичайні пригоди Алі', a:'Галина Малик', n:3},
+    {t:'Таємниця зміїної голови', a:'Андрій Кокотюха', n:3},
+    {t:'Фантастичний містер Лис', a:'Роальд Дал', n:2},
+    {t:'Неймовірні пригоди Івана Сили', a:'Олександр Гаврош', n:2},
+    {t:'Пригоди вужа Ониська', a:'Леонід Закалюжний', n:3},
+    {t:'Сторожова застава', a:'Василь Рутківський', n:2},
+    {t:'Аліса в країні Див', a:'Льюїс Керролл', n:2},
+    {t:'Таємниця козацького скарбу', a:'Андрій Кокотюха', n:2},
+    {t:'Пес на ім\'я Мані', a:'Бодо Шефер', n:2},
+    {t:'Казка про Оха-чародія', a:'Леся Українка', n:2},
+    {t:'Мавка', a:'за мотивами Лесі Українки', n:2},
+    {t:'Незвичайні пригоди в лісовій школі', a:'Всеволод Нестайко', n:2},
+    {t:'Слобожанська Атлантида', a:'Віктор Полянко', n:2},
+    {t:'Федько, прибулець з Інтернету', a:'Сергій Гридін', n:2},
+  ],
+  authors: [
+    {a:'Всеволод Нестайко', n:54, books:9},
+    {a:'Сашко Дерманський', n:20, books:4},
+    {a:'Андрій Кокотюха', n:16, books:5},
+    {a:'Леся Вороніна', n:11, books:2},
+    {a:'Роальд Дал', n:7, books:3},
+    {a:'Леся Українка', n:4, books:3},
+    {a:'Ірен Роздобудько', n:4, books:2},
+    {a:'Ганс Крістіан Андерсен', n:4, books:3},
+    {a:'Галина Вдовиченко', n:4, books:2},
+    {a:'Галина Малик', n:4, books:2},
+    {a:'Юліта Ран', n:4, books:2},
+    {a:'Юрій Винничук', n:4, books:2},
+    {a:'Олександр Гаврош', n:3, books:2},
+    {a:'Сельма Лаґерлеф', n:3, books:1},
+    {a:'Брати Грімм', n:3, books:3},
+    {a:'Пітер Браун', n:3, books:1},
+    {a:'Леонід Закалюжний', n:3, books:1},
+    {a:'Шарль Перро', n:3, books:2},
+    {a:'Джоан Роулінг', n:3, books:2},
+    {a:'Василь Рутківський', n:3, books:2},
+  ],
+  regions: [
+    {r:'Дніпропетровська', n:142},
+    {r:'Харківська', n:120},
+    {r:'Рівненська', n:78},
+    {r:'Кіровоградська', n:62},
+    {r:'Миколаївська', n:59},
+    {r:'Полтавська', n:47},
+    {r:'Тернопільська', n:46},
+    {r:'Сумська', n:45},
+    {r:'Черкаська', n:39},
+    {r:'Київська', n:34},
+    {r:'Вінницька', n:31},
+    {r:'Хмельницька', n:29},
+    {r:'Закарпатська', n:29},
+    {r:'Львівська', n:23},
+    {r:'Одеська', n:22},
+    {r:'Волинська', n:18},
+    {r:'Житомирська', n:16},
+    {r:'Чернівецька', n:13},
+    {r:'Херсонська', n:9},
+    {r:'Чернігівська', n:7},
+    {r:'Запорізька', n:7},
+    {r:'Івано-Франківська', n:8},
+    {r:'Донецька', n:5},
+  ],
+  ages: [
+    {age:'6', n:25},{age:'7', n:82},{age:'8', n:125},
+    {age:'9', n:154},{age:'10', n:163},{age:'11', n:117},
+    {age:'12', n:73},{age:'13', n:66},{age:'14', n:33},
+    {age:'15', n:25},{age:'16', n:7},
+  ],
+  timeline: [
+    {d:'01.03',n:8},{d:'02.03',n:3},{d:'03.03',n:5},{d:'04.03',n:7},
+    {d:'05.03',n:4},{d:'06.03',n:6},{d:'07.03',n:9},{d:'08.03',n:5},
+    {d:'09.03',n:4},{d:'10.03',n:6},{d:'11.03',n:8},{d:'12.03',n:7},
+    {d:'13.03',n:5},{d:'14.03',n:6},{d:'15.03',n:9},{d:'16.03',n:8},
+    {d:'17.03',n:7},{d:'18.03',n:10},{d:'19.03',n:12},{d:'20.03',n:15},
+    {d:'21.03',n:18},{d:'22.03',n:21},{d:'23.03',n:66},{d:'24.03',n:34},
+    {d:'25.03',n:28},{d:'26.03',n:22},{d:'27.03',n:52},{d:'28.03',n:38},
+    {d:'29.03',n:31},{d:'30.03',n:68},{d:'31.03',n:82},{d:'01.04',n:99},
+  ],
+  regionTops: {
+    'Дніпропетровська': ['Тореадори з Васюківки','Дивовижні пригоди в лісовій школі','Чудове Чудовисько'],
+    'Харківська': ['Тореадори з Васюківки','Таємне Товариство Боягузів','Гаррі Поттер'],
+    'Рівненська': ['Дивовижні пригоди в лісовій школі','Кіт у чоботях','Зварю тобі борщику'],
+    'Кіровоградська': ['Тореадори з Васюківки','Чудове Чудовисько','Незвичайні пригоди Алі'],
+    'Миколаївська': ['Тореадори з Васюківки','Таємне Товариство Боягузів','36 і 6 котів'],
+  }
+};
+
+function rankNum(i) {
+  if (i===0) return '<span class="rank-n g">1</span>';
+  if (i===1) return '<span class="rank-n s">2</span>';
+  if (i===2) return '<span class="rank-n b">3</span>';
+  return `<span class="rank-n">${i+1}</span>`;
+}
+
+function buildRankList(containerId, items, max, showSub) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const top = items.slice(0, max);
+  const maxN = top[0] ? top[0].n : 1;
+  el.innerHTML = top.map((item, i) => `
+    <li class="rank-item">
+      ${rankNum(i)}
+      <div class="rank-info">
+        <div class="rank-title">${item.t || item.a}</div>
+        ${showSub && (item.a || item.books) ? `<div class="rank-sub">${item.a || ''}${item.books ? ` · ${item.books} тв.` : ''}</div>` : ''}
+      </div>
+      <div class="rank-bar-wrap">
+        <div class="rank-bar"><div class="rank-bar-fill" style="width:${Math.round(item.n/maxN*100)}%"></div></div>
+        <div class="rank-count">${item.n}</div>
+      </div>
+    </li>`).join('');
+}
+
+function buildCloud(containerId, items, maxShow) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const top = items.slice(0, maxShow);
+  const maxN = top[0] ? top[0].n : 1;
+  const minN = top[top.length-1] ? top[top.length-1].n : 1;
+  el.innerHTML = top.map(item => {
+    const ratio = (item.n - minN) / (maxN - minN + 0.01);
+    const cls = ratio > 0.8 ? 's5' : ratio > 0.6 ? 's4' : ratio > 0.4 ? 's3' : ratio > 0.2 ? 's2' : 's1';
+    return `<span class="tag ${cls}" title="${item.n} відео">${item.a}</span>`;
+  }).join('');
+}
+
+function buildRegions() {
+  const el = document.getElementById('regions-chart');
+  if (!el) return;
+  const maxN = DATA.regions[0].n;
+  el.innerHTML = DATA.regions.map(r => `
+    <div class="region-item">
+      <div class="region-name">${r.r}</div>
+      <div class="region-bar-wrap"><div class="region-bar" style="width:${Math.round(r.n/maxN*100)}%"></div></div>
+      <div class="region-count">${r.n}</div>
+    </div>`).join('');
+}
+
+function buildRegionTops() {
+  const el = document.getElementById('region-tops');
+  if (!el) return;
+  el.innerHTML = Object.entries(DATA.regionTops).map(([reg, books]) => `
+    <div style="margin-bottom:16px;">
+      <div style="font-weight:500; font-size:13px; margin-bottom:6px; color:var(--teal);">${reg}</div>
+      ${books.map((b,i) => `<div style="font-size:12px; color:var(--steel); padding:2px 0;">${i+1}. ${b}</div>`).join('')}
+    </div>`).join('');
+}
+
+function buildAge() {
+  const el = document.getElementById('age-chart');
+  if (!el) return;
+  const maxN = Math.max(...DATA.ages.map(a=>a.n));
+  el.innerHTML = DATA.ages.map(a => `
+    <div class="age-col">
+      <div class="age-bar-wrap">
+        <div class="age-bar" style="height:${Math.round(a.n/maxN*140)}px;" title="${a.n} учасників">
+          <div class="age-bar-val">${a.n}</div>
+        </div>
+      </div>
+      <div class="age-label">${a.age}</div>
+    </div>`).join('');
+}
+
+function buildTimeline() {
+  const el = document.getElementById('timeline-chart');
+  if (!el) return;
+  const maxN = Math.max(...DATA.timeline.map(d=>d.n));
+  el.innerHTML = DATA.timeline.map(d => `
+    <div class="tl-col">
+      <div class="tl-bar" style="height:${Math.round(d.n/maxN*100)}px;" data-tip="${d.d}: ${d.n} відео"></div>
+      <div class="tl-label">${d.d}</div>
+    </div>`).join('');
+}
+
+function showTab(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Init
+buildRankList('overview-books', DATA.books, 10, true);
+buildRankList('overview-authors', DATA.authors, 10, true);
+buildRankList('all-books', DATA.books, 30, true);
+buildRankList('all-authors', DATA.authors, 20, true);
+buildCloud('author-cloud', DATA.authors, 20);
+buildCloud('author-cloud-2', DATA.authors, 20);
+buildRegions();
+buildRegionTops();
+buildAge();
+buildTimeline();
+</script>
+
+<footer style="background:var(--ink); padding:20px 48px; display:flex; align-items:center; justify-content:space-between; border-top:3px solid var(--gold); margin-top:48px;">
+  <div>
+    <div style="font-family:'Playfair Display',serif; color:var(--gold); font-size:16px; font-weight:700; letter-spacing:1px; margin-bottom:3px;">Національна бібліотека України для дітей</div>
+    <a href="https://chl.kiev.ua" target="_blank" style="font-size:12px; color:rgba(255,255,255,0.4); text-decoration:none;">chl.kiev.ua</a>
+  </div>
+  <div style="font-size:11px; color:rgba(255,255,255,0.25); text-align:right; line-height:1.7;">
+    Національний читацький марафон · 2026<br>
+    «Діти України читають» · «У світі пригод і фантазій»
+  </div>
+</footer>
+</body>
+</html>
