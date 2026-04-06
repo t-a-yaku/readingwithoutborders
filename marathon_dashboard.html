@@ -15,14 +15,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #1a1a2e;
-  --paper: #faf8f4;
-  --warm: #f5f0e8;
-  --gold: #c8960c;
-  --gold-light: #f0d98a;
-  --rust: #c0392b;
-  --steel: #6b6b7b;
-  --border: #e0ddd8;
+  --ink: #1a1410;       /* --pk-color-ink: теплий майже-чорний */
+  --paper: #f7f3ec;     /* --pk-color-paper */
+  --warm: #f0e8d8;      /* --pk-color-warm */
+  --gold: #b8860b;      /* --pk-color-gold */
+  --gold-light: #d4a843;/* --pk-color-gold-l */
+  --rust: #8b3a1a;      /* --pk-color-accent */
+  --steel: #8a7d6e;     /* --pk-color-muted */
+  --border: #d4c9b8;    /* --pk-color-line */
   --teal: #0f7c6e;
   --teal-light: #e0f2ef;
 }
@@ -154,14 +154,12 @@ body { font-family: 'Geologica', sans-serif; background: var(--paper); color: va
 </head>
 <body>
 
-<header style="background:var(--ink); padding:10px 48px; display:flex; align-items:center; justify-content:flex-end; border-bottom:1px solid rgba(255,255,255,0.08);">
+<header style="background:var(--ink); padding:10px 48px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.08);">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;letter-spacing:0.5px;transition:color 0.15s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">← Читання без кордонів — карта</a>
   <a href="https://chl.kiev.ua" target="_blank" style="font-size:12px; color:rgba(255,255,255,0.45); text-decoration:none; text-align:right; line-height:1.5;">Національна бібліотека України для дітей<br><span style="color:var(--gold); opacity:0.7;">chl.kiev.ua</span></a>
 </header>
 
 <div class="hero">
-  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;margin-bottom:16px;letter-spacing:0.5px;transition:color 0.15s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
-    ← Читання без кордонів — карта
-  </a>
   <div class="hero-eye">Національний читацький марафон · Діти України читають · 2026</div>
   <h1 class="hero-title">У світі <em>пригод і фантазій</em></h1>
   <p class="hero-sub">Аналіз відеомарафону · дані очищено та нормалізовано</p>
@@ -352,35 +350,36 @@ body { font-family: 'Geologica', sans-serif; background: var(--paper); color: va
 <script>
 const DATA = {
   books: [
-    {t:'Тореадори з Васюківки', a:'Всеволод Нестайко', n:21},
-    {t:'Дивовижні пригоди в лісовій школі', a:'Всеволод Нестайко', n:15},
-    {t:'Таємне Товариство Боягузів', a:'Леся Вороніна', n:8},
+    {t:'Тореадори з Васюківки', a:'Всеволод Нестайко', n:23},
+    {t:'Дивовижні пригоди в лісовій школі', a:'Всеволод Нестайко', n:14},
+    {t:'Таємне Товариство Боягузів', a:'Леся Вороніна', n:6},
     {t:'Чудове Чудовисько', a:'Сашко Дерманський', n:6},
     {t:'Гаррі Поттер (серія)', a:'Джоан Роулінг', n:6},
     {t:'Зварю тобі борщику', a:'Зірка Мензатюк', n:5},
+    {t:'Серія про Мопса Пеггі', a:'Белла Свіфт', n:3},
     {t:'Чарлі і шоколадна фабрика', a:'Роальд Дал', n:3},
     {t:'36 і 6 котів', a:'Галина Вдовиченко', n:3},
     {t:'Чудесна мандрівка Нільса', a:'Сельма Лаґерлеф', n:3},
     {t:'Щоденник Слабака', a:'Джефф Кінні', n:3},
     {t:'Кіт у чоботях', a:'Шарль Перро', n:3},
-    {t:'Друга справа Сашка Сірого', a:'Андрій Кокотюха', n:3},
-    {t:'Пригоди на острові Клаварен', a:'Юліта Ран', n:3},
-    {t:'Незламне серце', a:'', n:3},
-    {t:'Дракони', a:'', n:3},
-    {t:'Країна неслухняних дітей', a:'', n:3},
-    {t:'Незвичайні пригоди Алі', a:'Галина Малик', n:3},
+    {t:'Друга справа Сашка Сірого', a:'Юлія Ілюха', n:3},
+    {t:'Пригоди на острові Клаварен', a:'Ірен Роздобудько', n:3},
+    {t:'Незламне серце', a:'Таня Гуд', n:3},
+    {t:'Дракони, вперед!', a:'Катерина Штанько', n:3},
+    {t:'Країна неслухняних дітей', a:'Валентина Кохан', n:3},
+    {t:'Незвичайні пригоди Алі в країні Недоладії', a:'Галина Малик', n:3},
     {t:'Таємниця зміїної голови', a:'Андрій Кокотюха', n:3},
+    {t:'Пригоди вужа Ониська', a:'Сашко Дерманський', n:3},
+    {t:'Острів Циклопа', a:'Леонід Закалюжний', n:3},
     {t:'Фантастичний містер Лис', a:'Роальд Дал', n:2},
     {t:'Неймовірні пригоди Івана Сили', a:'Олександр Гаврош', n:2},
-    {t:'Пригоди вужа Ониська', a:'Леонід Закалюжний', n:3},
+    {t:'Пригоди Тома Сойєра', a:'Марк Твен', n:2},
     {t:'Сторожова застава', a:'Василь Рутківський', n:2},
-    {t:'Аліса в країні Див', a:'Льюїс Керролл', n:2},
+    {t:'Аліса в країні Чудес', a:'Льюїс Керролл', n:2},
     {t:'Таємниця козацького скарбу', a:'Андрій Кокотюха', n:2},
     {t:'Пес на ім\'я Мані', a:'Бодо Шефер', n:2},
     {t:'Казка про Оха-чародія', a:'Леся Українка', n:2},
     {t:'Мавка', a:'за мотивами Лесі Українки', n:2},
-    {t:'Незвичайні пригоди в лісовій школі', a:'Всеволод Нестайко', n:2},
-    {t:'Слобожанська Атлантида', a:'Віктор Полянко', n:2},
     {t:'Федько, прибулець з Інтернету', a:'Сергій Гридін', n:2},
   ],
   authors: [
